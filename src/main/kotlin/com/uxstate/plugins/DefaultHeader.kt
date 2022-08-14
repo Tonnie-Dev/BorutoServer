@@ -1,9 +1,8 @@
 package com.uxstate.plugins
 
+import io.ktor.http.HttpHeaders.CacheControl
 import io.ktor.server.application.*
 import io.ktor.server.plugins.defaultheaders.*
-import io.netty.handler.codec.DefaultHeaders
-import java.net.http.HttpHeaders
 import java.time.Duration
 
 
@@ -19,8 +18,8 @@ fun Application.configureDefaulterHeader(){
 
         val oneYearInSeconds = Duration.ofDays(365).seconds
 
-        header(name = io.ktor.http.HttpHeaders.CacheControl, value = "public, max-age=$oneYearInSeconds, " +
-                "immutable")
+        header(name = CacheControl,
+                value = "public, max-age=$oneYearInSeconds, immutable")
 
     }
 
