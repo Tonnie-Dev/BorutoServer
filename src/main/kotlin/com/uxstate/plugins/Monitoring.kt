@@ -7,9 +7,11 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 
 fun Application.configureMonitoring() {
-    install(CallLogging) {
+
+    //callLogging with the default settum
+    install(CallLogging) /*{
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
-    }
+    }*/
 
 }
