@@ -10,7 +10,7 @@ fun main(args: Array<String>): Unit =
 fun Application.module() {
 
     //plugins
-    configureKoin()//first call
+    configureKoin()//first call to avoid compile time errors
     configureSerialization()
     configureMonitoring()
     configureRouting()
