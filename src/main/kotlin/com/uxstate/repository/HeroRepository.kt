@@ -15,11 +15,9 @@ interface HeroRepository {
     val page4:List<Hero>
     val page5:List<Hero>
 
-    //return All Heroes
+    //return All Heroes taking the pg no to return
+    suspend fun getAllHeroes(page:Int = 1):ApiResponse
 
-    suspend fun getAllHeroes():ApiResponse
-
-    //return search result
-
+    //return search result taking a query parameter
     suspend fun searchHeroes(name:String):ApiResponse
 }
