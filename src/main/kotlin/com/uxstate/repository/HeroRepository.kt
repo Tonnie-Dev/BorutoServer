@@ -20,4 +20,6 @@ interface HeroRepository {
     suspend fun getAllHeroes():ApiResponse
 
     //return search result
+
+    suspend fun searchHeroes(name:String):ApiResponse
 }
