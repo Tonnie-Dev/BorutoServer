@@ -1,5 +1,6 @@
 package com.uxstate.repository
 
+import com.uxstate.model.ApiResponse
 import com.uxstate.model.Hero
 
 interface HeroRepository {
@@ -13,4 +14,10 @@ interface HeroRepository {
     val page3:List<Hero>
     val page4:List<Hero>
     val page5:List<Hero>
+
+    //return All Heroes
+
+    suspend fun getAllHeroes():ApiResponse
+
+    //return search result
 }
