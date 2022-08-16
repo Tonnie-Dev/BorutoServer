@@ -405,7 +405,7 @@ class HeroRepositoryImpl : HeroRepository {
                heroes = heroes[page]!!)
     }
 
-    override suspend fun searchHeroes(name: String): ApiResponse {
+    override suspend fun searchHeroes(name: String?): ApiResponse {
     return ApiResponse(success = true,
             message = "OK",
             heroes = findHeroes(name))

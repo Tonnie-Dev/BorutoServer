@@ -19,5 +19,5 @@ interface HeroRepository {
     suspend fun getAllHeroes(page:Int = 1):ApiResponse
 
     //return search result taking a query parameter
-    suspend fun searchHeroes(name:String):ApiResponse
+    suspend fun searchHeroes(name:String?):ApiResponse
 }
