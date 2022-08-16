@@ -4,7 +4,7 @@ import com.uxstate.model.ApiResponse
 import com.uxstate.model.Hero
 
 class HeroRepositoryImpl : HeroRepository {
-    //map of pages to List<Hero>
+    //map of pages to List<Hero>, if we specify page 1 we get page1's list
     override val heroes: Map<Int, List<Hero>> by lazy {
         mapOf(1 to page1, 2 to page2, 3 to page3, 4 to page4, 5 to page5)
 
