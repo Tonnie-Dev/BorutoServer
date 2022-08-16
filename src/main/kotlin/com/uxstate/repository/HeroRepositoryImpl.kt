@@ -3,6 +3,11 @@ package com.uxstate.repository
 import com.uxstate.model.ApiResponse
 import com.uxstate.model.Hero
 
+
+
+const val PREV_PAGE_KEY = "prevPage"
+const val NEXT_PAGE_KEY = "nextPage"
+
 class HeroRepositoryImpl : HeroRepository {
     //map of pages to List<Hero>, if we specify page 1 we get page1's list
     override val heroes: Map<Int, List<Hero>> by lazy {
@@ -393,8 +398,8 @@ class HeroRepositoryImpl : HeroRepository {
     override suspend fun getAllHeroes(page: Int): ApiResponse {
        return ApiResponse(success = true,
                message = "OK",
-               previousPage = null,
-               nextPage = null,
+               previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
+               nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
                heroes = heroes[page]!!)
     }
 
@@ -416,11 +421,13 @@ class HeroRepositoryImpl : HeroRepository {
             prevPage = page.minus(1)
         }
 
+        //no room to decrease next page
         if (page==1){
 
             prevPage = null
         }
 
+        //no room to increase next page
         if (page==5){
             nextPage = null
         }
