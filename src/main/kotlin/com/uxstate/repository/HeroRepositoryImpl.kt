@@ -398,6 +398,8 @@ class HeroRepositoryImpl : HeroRepository {
     override suspend fun getAllHeroes(page: Int): ApiResponse {
        return ApiResponse(success = true,
                message = "OK",
+
+               //calculatePageNumber returns a map, we retrieve the int by passing the key
                previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
                nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
                heroes = heroes[page]!!)
@@ -433,7 +435,7 @@ class HeroRepositoryImpl : HeroRepository {
         }
 
 
-        return mapOf("prevPage" to prevPage, "nextPage" to nextPage)
+        return mapOf(PREV_PAGE_KEY to prevPage, NEXT_PAGE_KEY to nextPage)
 
     }
 }

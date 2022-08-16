@@ -1,15 +1,21 @@
 package com.uxstate.routes
 
 import com.uxstate.model.ApiResponse
+import com.uxstate.repository.HeroRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
 fun Route.getAllHeroes() {
+
+    //inject heroRepository - it will automatically find the impl from coin
+
+    val repository:HeroRepository by inject()
 
     get(path = "/boruto/heroes") {
 
@@ -21,7 +27,9 @@ fun Route.getAllHeroes() {
             require(page in 1..5) //{explanatory message}
 
             //respond
-            call.respond(message = page)
+           repository.getAllHeroes(page)
+
+            call.respond( repository.getAllHeroes(page))
         }
 
 
