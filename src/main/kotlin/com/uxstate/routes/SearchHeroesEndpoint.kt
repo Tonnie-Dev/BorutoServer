@@ -19,7 +19,7 @@ fun Route.searchHeroes(){
 
         //takes one query parameter
 
-        val name = call.request.queryParameters["name"] 
+        val name = call.request.queryParameters["name"]
 
         call.respond(message = repository.searchHeroes(name), status = HttpStatusCode.OK)
 
