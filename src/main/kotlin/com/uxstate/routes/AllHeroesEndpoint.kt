@@ -4,7 +4,6 @@ import com.uxstate.model.ApiResponse
 import com.uxstate.repository.HeroRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
@@ -29,7 +28,7 @@ fun Route.getAllHeroes() {
             //respond
            repository.getAllHeroes(page)
 
-            call.respond( repository.getAllHeroes(page))
+            call.respond( message = repository.getAllHeroes(page), status = HttpStatusCode.OK)
         }
 
 

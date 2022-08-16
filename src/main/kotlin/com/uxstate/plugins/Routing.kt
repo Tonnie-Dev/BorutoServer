@@ -11,6 +11,7 @@ fun Application.configureRouting() {
     routing {
         this.root()
         this.getAllHeroes()
+        this.ge
         static("/images"){
 
             resources("images")
