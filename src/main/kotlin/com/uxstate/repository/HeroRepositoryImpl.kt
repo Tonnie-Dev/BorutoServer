@@ -408,7 +408,7 @@ class HeroRepositoryImpl : HeroRepository {
     override suspend fun searchHeroes(name: String): ApiResponse {
     return ApiResponse(success = true,
             message = "OK",
-            heroes = listOf())
+            heroes = findHeroes(name))
     }
 
     private fun calculatePageNumber(page:Int):Map<String, Int?>{
