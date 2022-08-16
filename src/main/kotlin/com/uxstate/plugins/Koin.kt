@@ -12,10 +12,10 @@ fun Application.configureKoin(  ){
     //installing koin plugin
     install(Koin){
 
-        //initialize logger
+        //initialize logger - Simple Logging Facade 4 Java
         slf4jLogger()
 
-        //call koin's module passing in a variable
+        //call koin's module passing in a module variable
        modules(koinModule)
     }
 }
