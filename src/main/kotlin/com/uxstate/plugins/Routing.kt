@@ -18,6 +18,10 @@ fun Application.configureRouting() {
             resources("images")
         }
 
+        get("/test"){
+
+            throw IllegalAccessException()
+        }
 
     }
 }

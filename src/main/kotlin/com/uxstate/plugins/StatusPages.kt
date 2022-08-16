@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
+import java.lang.IllegalArgumentException
 
 fun Application.configureStatusPages(){
 
@@ -17,6 +18,19 @@ fun Application.configureStatusPages(){
             call.respond(message = "404: Page Not Found", status = status)
         }
 
+
+        //whenever the specified exception is caught, the below code is triggered to respond with
+              // a custom message
+        exception<IllegalArgumentException>(){
+
+            call, _ ->
+
+            call.respond(message = "exception called", status = HttpStatusCode.BadRequest)
+        }
+
+        //You can also check specific exceptions and respond with the required content:
+
+        
     }
 
 
