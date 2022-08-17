@@ -16,18 +16,26 @@ import io.ktor.server.testing.*
 import com.uxstate.plugins.*
 
 class ApplicationTest {
-    @Test
+    /*@Test
     fun testRoot() = testApplication {
 
 
 
        application {
-            //configureRouting()
-           Application::module
+            configureRouting()
+
         }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
             assertEquals("Welcome to Boruto API", bodyAsText())
         }
+    }*/
+
+
+    @Test
+    fun testRoot() = testApplication {
+        val response = client.get("/")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expected = "\"Welcome to Boruto API\"", actual = response.bodyAsText())
     }
 }
