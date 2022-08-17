@@ -18,12 +18,16 @@ import com.uxstate.plugins.*
 class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
-        application {
-            configureRouting()
+
+
+
+       application {
+            //configureRouting()
+           Application::module
         }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+            assertEquals("Welcome to Boruto API", bodyAsText())
         }
     }
 }

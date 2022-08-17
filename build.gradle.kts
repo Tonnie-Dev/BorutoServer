@@ -41,6 +41,13 @@ dependencies {
     //status pages
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
 
+
+    //testing
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+
+
 }

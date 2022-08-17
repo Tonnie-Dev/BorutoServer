@@ -25,12 +25,11 @@ fun Application.configureStatusPages(){
 
             call, _ ->
 
-            call.respond(message = "exception called", status = HttpStatusCode.BadRequest)
+            call.respond(message = "exception caught", status = HttpStatusCode.BadRequest)
         }
 
-        //You can also check specific exceptions and respond with the required content:
 
-        
+
     }
 
 
