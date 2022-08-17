@@ -29,4 +29,13 @@ class ApplicationTest {
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals(expected = "\"Welcome to Boruto API\"", actual = response.bodyAsText())
     }
+
+    @Test
+    fun `access all heroes endpoint, assert correct information`() = testApplication {
+
+        val response = client.get("/boruto/heroes")
+        
+    }
+
+
 }
