@@ -1,12 +1,16 @@
 package com.uxstate
 
+import com.uxstate.repository.HeroRepository
 import io.ktor.http.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
+import org.koin.java.KoinJavaComponent.inject
 
 class ApplicationTest {
+
+    val repository:HeroRepository by inject(HeroRepository::class.java)
     /*@Test
     fun testRoot() = testApplication {
 
@@ -34,7 +38,10 @@ class ApplicationTest {
     fun `access all heroes endpoint, assert correct information`() = testApplication {
 
         val response = client.get("/boruto/heroes")
-        
+
+        //first check the returned status code is OK
+
+        assertEquals(expected = HttpStatusCode.OK, response.status)
     }
 
 
