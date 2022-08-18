@@ -9,6 +9,7 @@ import com.uxstate.repository.PREV_PAGE_KEY
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.client.utils.EmptyContent.status
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.decodeFromString
@@ -134,6 +135,22 @@ class ApplicationTest {
 
         }
 
+
+    @Test
+    fun `access all heroes endpoint, query non existent page number, assert error`() =
+        testApplication {
+
+            val response = client.get("/boruto/heroes?page=10")
+
+            assertEquals(expected = HttpStatusCode.NotFound, actual = response.status)
+
+            val expected = ApiResponse(success = false,
+                    message = "Heroes not found")
+            val actual = Json.decodeFromString<ApiResponse>(response.body())
+
+           assertEquals(expected = expected, actual  = actual)
+
+        }
 
     private fun calculatePageNumber(page: Int): Map<String, Int?> {
 

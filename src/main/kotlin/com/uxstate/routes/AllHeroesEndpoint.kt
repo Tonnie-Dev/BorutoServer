@@ -44,6 +44,10 @@ fun Route.getAllHeroes() {
         //catch error thrown at require(){}
         catch (e: IllegalArgumentException) {
 
+           /* call.respond(message = ApiResponse(success = false,
+                    message = "Heroes not found"),
+                    status = HttpStatusCode.NotFound)*/
+
             call.respond(message = ApiResponse(success = false,
                     message = "Heroes not found"),
                     status = HttpStatusCode.NotFound)
