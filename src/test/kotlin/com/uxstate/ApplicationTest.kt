@@ -64,12 +64,22 @@ class ApplicationTest {
         //response from the server
 
 
-     // val actual = Json.decodeFromString<ApiResponse>(response.content.toString())
+      //val actual = Json.decodeFromString<ApiResponse>(response.content.toString())
      val actual = Json.decodeFromString<ApiResponse>(response.body())
 
-        println("Actual is $actual")
+        println("Actual isvv $actual")
+        println("expected isvv $expected")
+
         assertEquals(expected = expected, actual = actual)
     }
 
 
+
+    @Test
+    fun `access all heroes endpoint, query all pages, assert correct information`()=
+        testApplication {
+
+            val response = client.get("/boruto/heroes")
+
+    }
 }
