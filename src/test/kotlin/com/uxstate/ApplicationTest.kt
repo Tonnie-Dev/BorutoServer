@@ -24,17 +24,17 @@ class ApplicationTest {
     private val repository: HeroRepository by inject(HeroRepository::class.java)
 
 
-/*@BeforeTest
-fun setup() = testApplication {
+    /*@BeforeTest
+    fun setup() = testApplication {
 
 
-    application {
-        configureKoin()
+        application {
+            configureKoin()
 
-    }
+        }
 
 
-}*/
+    }*/
 
 
     /*@Test
@@ -69,7 +69,7 @@ fun setup() = testApplication {
         }
 
         //list of pages
-     //   val heroes = repository.page1
+        //   val heroes = repository.page1
         val response = client.get("/boruto/heroes")
 
         //first check the returned status code is OK
@@ -95,58 +95,68 @@ fun setup() = testApplication {
     }
 
     @Test
-    fun `access all heroes endpoint, query all pages, assert correct information`() = testApplication {
+    fun `access all heroes endpoint, query all pages, assert correct information`() =
+        testApplication {
+            environment {
+                developmentMode = false
+            }
 
             //range
             val pages = 1..5
 
 
-          pages.forEach { page ->
+            pages.forEach { page ->
 
-              val response = client.get("/boruto/heroes?page=${page}")
+                val response = client.get("/boruto/heroes?page=${page}")
 
-              assertEquals(expected = HttpStatusCode.OK, actual = response.status)
 
-              val expected = ApiResponse(success = true,
-                      message = "OK",
-                      previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
-                      nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
-                      heroes = listOf(repository.page1, repository.page2, repository.page3,
-                              repository.page4, repository.page5)[page -1])
+                println("CURRENT PAGE: $page")
+                assertEquals(expected = HttpStatusCode.OK, actual = response.status)
 
-              val actual = Json.decodeFromString<ApiResponse>(response.body())
+                val expected = ApiResponse(success = true,
+                        message = "OK",
+                        previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
+                        nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
+                        heroes = listOf(repository.page1, repository.page2, repository.page3,
+                                repository.page4, repository.page5)[page - 1])
 
-              assertEquals(expected = expected, actual = actual)
-              
+                val actual = Json.decodeFromString<ApiResponse>(response.body())
+                println("PREV PAGE: ${calculatePageNumber(page)[PREV_PAGE_KEY]}")
+                println("NEXT PAGE: ${calculatePageNumber(page)[NEXT_PAGE_KEY]}")
+                println("HEROES: ${
+                    listOf(repository.page1, repository.page2, repository.page3,
+                            repository.page4, repository.page5)[page - 1]
+                }")
+                assertEquals(expected = expected, actual = actual)
+
             }
 
 
         }
 
 
+    private fun calculatePageNumber(page: Int): Map<String, Int?> {
 
-    private fun calculatePageNumber(page:Int):Map<String, Int?>{
+        var nextPage: Int? = page
+        var prevPage: Int? = page
 
-        var nextPage:Int? = page
-        var prevPage:Int? = page
-
-        if (page in 1..4){
+        if (page in 1..4) {
 
             nextPage = page.plus(1)
         }
-        if (page in 2..5){
+        if (page in 2..5) {
 
             prevPage = page.minus(1)
         }
 
         //no room to decrease next page
-        if (page==1){
+        if (page == 1) {
 
             prevPage = null
         }
 
         //no room to increase next page
-        if (page==5){
+        if (page == 5) {
             nextPage = null
         }
 
