@@ -172,6 +172,28 @@ class ApplicationTest {
 
         assertEquals(expected = expected, actual = actual)
     }
+
+
+    @Test
+    fun `access search heroes endpoint, query hero name, assert single hero result` () = testApplication {
+        environment {
+            developmentMode = false
+        }
+        val searchQuery = "sas"
+        val response = client.get("/boruto/heroes/search?name=$searchQuery")
+
+        //Assert status codes
+        assertEquals(expected = HttpStatusCode.OK, actual = response.status)
+
+        //expected search body
+        val expected = repository.searchHeroes(searchQuery)
+        val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes.size
+
+        //Assert API Response
+
+        assertEquals(expected = 1, actual = actual)
+
+    }
     private fun calculatePageNumber(page: Int): Map<String, Int?> {
 
         var nextPage: Int? = page
@@ -201,4 +223,5 @@ class ApplicationTest {
         return mapOf(PREV_PAGE_KEY to prevPage, NEXT_PAGE_KEY to nextPage)
 
     }
+
 }
