@@ -241,6 +241,31 @@ class ApplicationTest {
             assertEquals(expected = emptyList(), actual = actual)
 
         }
+
+
+
+    @Test
+    fun `access search heroes endpoint, query non existent hero, assert empty list as a result`
+            () =
+        testApplication {
+            environment {
+                developmentMode = false
+            }
+            val searchQuery = "Babylon"
+            val response = client.get("/boruto/heroes/search?name=$searchQuery")
+
+            //Assert status codes
+            assertEquals(expected = HttpStatusCode.OK, actual = response.status)
+
+            //expected search body
+            val expected = repository.searchHeroes(searchQuery)
+            val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes
+
+            //Assert API Response
+
+            assertEquals(expected = emptyList(), actual = actual)
+
+        }
     private fun calculatePageNumber(page: Int): Map<String, Int?> {
 
         var nextPage: Int? = page
