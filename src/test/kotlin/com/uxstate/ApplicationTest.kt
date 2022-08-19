@@ -150,7 +150,7 @@ class ApplicationTest {
                     message = "Heroes not found")
             val actual = Json.decodeFromString<ApiResponse>(response.content.toString())*/
 
-           assertEquals(expected = "\"404: Page Not Found\"", actual  = response.body())
+           assertEquals(expected = "\"Page Not Found\"", actual  = response.body())
 
         }
 
@@ -266,6 +266,31 @@ class ApplicationTest {
             assertEquals(expected = emptyList(), actual = actual)
 
         }
+
+
+    @Test
+    fun `access non existent endpoint, assert not found`
+            () =
+        testApplication {
+            environment {
+                developmentMode = false
+            }
+
+            val response = client.get("/boruto/ruto")
+
+            //Assert status codes
+            assertEquals(expected = HttpStatusCode.NotFound, actual = response.status)
+
+
+
+
+
+            //Assert API Response
+
+            assertEquals(expected = "\"Page Not Found\"", actual = response.body())
+
+        }
+
     private fun calculatePageNumber(page: Int): Map<String, Int?> {
 
         var nextPage: Int? = page

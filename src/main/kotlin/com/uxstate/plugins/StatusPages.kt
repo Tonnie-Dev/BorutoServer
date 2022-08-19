@@ -15,7 +15,7 @@ fun Application.configureStatusPages(){
         status(HttpStatusCode.NotFound) { call, status ->
 
             //specify custom response whenever the server sends NOT_FOUND Status
-            call.respond(message = "404: Page Not Found", status = status)
+            call.respond(message = "Page Not Found", status = status)
         }
 
 
