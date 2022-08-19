@@ -152,6 +152,24 @@ class ApplicationTest {
 
         }
 
+
+
+    @Test
+    fun `access all heroes endpoint, query non string page number, assert error`() = testApplication {
+
+        val response = client.get("/boruto/heroes?page=abcd")
+
+        //assert returned status codes
+
+        assertEquals(expected = HttpStatusCode.BadRequest, actual = response.status)
+
+        val expected = ApiResponse(success = false,
+                message = "Only Numbers Allowed")
+
+        val actual =Json.decodeFromString<ApiResponse>(response.body())
+
+        assertEquals(expected = expected, actual = actual)
+    }
     private fun calculatePageNumber(page: Int): Map<String, Int?> {
 
         var nextPage: Int? = page
