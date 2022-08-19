@@ -12,6 +12,7 @@ import io.ktor.client.statement.*
 import io.ktor.client.utils.EmptyContent.status
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import io.ktor.util.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
@@ -136,6 +137,7 @@ class ApplicationTest {
         }
 
 
+    @OptIn(InternalAPI::class)
     @Test
     fun `access all heroes endpoint, query non existent page number, assert error`() =
         testApplication {
@@ -143,12 +145,12 @@ class ApplicationTest {
             val response = client.get("/boruto/heroes?page=10")
 
             assertEquals(expected = HttpStatusCode.NotFound, actual = response.status)
-
+/*
             val expected = ApiResponse(success = false,
                     message = "Heroes not found")
-            val actual = Json.decodeFromString<ApiResponse>(response.body())
+            val actual = Json.decodeFromString<ApiResponse>(response.content.toString())*/
 
-           assertEquals(expected = expected, actual  = actual)
+           assertEquals(expected = "\"404: Page Not Found\"", actual  = response.body())
 
         }
 
