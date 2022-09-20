@@ -20,5 +20,4 @@ data class ApiResponse(
 
     //specific time when the server sent a response to client
     val lastUpdated: Long? = null
-) {
-}
+)

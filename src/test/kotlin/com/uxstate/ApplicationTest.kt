@@ -114,15 +114,16 @@ class ApplicationTest {
 
                 println("CURRENT PAGE: $page")
                 assertEquals(expected = HttpStatusCode.OK, actual = response.status)
-
+                val actual = Json.decodeFromString<ApiResponse>(response.body())
                 val expected = ApiResponse(success = true,
                         message = "OK",
                         previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
                         nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
                         heroes = listOf(repository.page1, repository.page2, repository.page3,
-                                repository.page4, repository.page5)[page - 1])
+                                repository.page4, repository.page5)[page - 1],
+                lastUpdated = 0L)
 
-                val actual = Json.decodeFromString<ApiResponse>(response.body())
+
                 println("PREV PAGE: ${calculatePageNumber(page)[PREV_PAGE_KEY]}")
                 println("NEXT PAGE: ${calculatePageNumber(page)[NEXT_PAGE_KEY]}")
                 println("HEROES: ${
