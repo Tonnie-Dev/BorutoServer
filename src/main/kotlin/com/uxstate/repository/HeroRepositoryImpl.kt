@@ -402,7 +402,10 @@ class HeroRepositoryImpl : HeroRepository {
                //calculatePageNumber returns a map, we retrieve the int by passing the key
                previousPage = calculatePageNumber(page)[PREV_PAGE_KEY],
                nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
-               heroes = heroes[page]!!, lastUpdated = System.currentTimeMillis())
+               heroes = heroes[page]!!,
+
+               //to be used on the client side
+               lastUpdated = System.currentTimeMillis())
 
     }
 
