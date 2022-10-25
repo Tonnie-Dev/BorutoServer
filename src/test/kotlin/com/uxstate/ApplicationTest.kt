@@ -121,7 +121,7 @@ class ApplicationTest {
                         nextPage = calculatePageNumber(page)[NEXT_PAGE_KEY],
                         heroes = listOf(repository.page1, repository.page2, repository.page3,
                                 repository.page4, repository.page5)[page - 1],
-                lastUpdated = 0L)
+                        lastUpdated = actual.lastUpdated)
 
 
                 println("PREV PAGE: ${calculatePageNumber(page)[PREV_PAGE_KEY]}")
@@ -146,83 +146,82 @@ class ApplicationTest {
             val response = client.get("/boruto/heroes?page=10")
 
             assertEquals(expected = HttpStatusCode.NotFound, actual = response.status)
-/*
-            val expected = ApiResponse(success = false,
-                    message = "Heroes not found")
-            val actual = Json.decodeFromString<ApiResponse>(response.content.toString())*/
+            /*
+                        val expected = ApiResponse(success = false,
+                                message = "Heroes not found")
+                        val actual = Json.decodeFromString<ApiResponse>(response.content.toString())*/
 
-           assertEquals(expected = "\"Page Not Found\"", actual  = response.body())
+            assertEquals(expected = "\"Page Not Found\"", actual = response.body())
 
         }
 
 
-
     @Test
-    fun `access all heroes endpoint, query non string page number, assert error`() = testApplication {
-
-        val response = client.get("/boruto/heroes?page=abcd")
-
-        //assert returned status codes
-
-        assertEquals(expected = HttpStatusCode.BadRequest, actual = response.status)
-
-        val expected = ApiResponse(success = false,
-                message = "Only Numbers Allowed")
-
-        val actual =Json.decodeFromString<ApiResponse>(response.body())
-
-        assertEquals(expected = expected, actual = actual)
-    }
-
-
-    @Test
-    fun `access search heroes endpoint, query hero name, assert single hero result` () = testApplication {
-        environment {
-            developmentMode = false
-        }
-        val searchQuery = "sas"
-        val response = client.get("/boruto/heroes/search?name=$searchQuery")
-
-        //Assert status codes
-        assertEquals(expected = HttpStatusCode.OK, actual = response.status)
-
-        //expected search body
-        val expected = repository.searchHeroes(searchQuery)
-        val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes.size
-
-        //Assert API Response
-
-        assertEquals(expected = 1, actual = actual)
-
-    }
-
-
-
-    @Test
-    fun `access search heroes endpoint, query hero name, assert multiple heroes result` () =
+    fun `access all heroes endpoint, query non string page number, assert error`() =
         testApplication {
-        environment {
-            developmentMode = false
+
+            val response = client.get("/boruto/heroes?page=abcd")
+
+            //assert returned status codes
+
+            assertEquals(expected = HttpStatusCode.BadRequest, actual = response.status)
+
+            val expected = ApiResponse(success = false,
+                    message = "Only Numbers Allowed")
+
+            val actual = Json.decodeFromString<ApiResponse>(response.body())
+
+            assertEquals(expected = expected, actual = actual)
         }
-        val searchQuery = "sa"
-        val response = client.get("/boruto/heroes/search?name=$searchQuery")
 
-        //Assert status codes
-        assertEquals(expected = HttpStatusCode.OK, actual = response.status)
-
-        //expected search body
-        val expected = repository.searchHeroes(searchQuery)
-        val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes.size
-
-        //Assert API Response
-
-        assertEquals(expected = 3, actual = actual)
-
-    }
 
     @Test
-    fun `access search heroes endpoint, query an empty text, assert empty list as a result`
-            () =
+    fun `access search heroes endpoint, query hero name, assert single hero result`() =
+        testApplication {
+            environment {
+                developmentMode = false
+            }
+            val searchQuery = "sas"
+            val response = client.get("/boruto/heroes/search?name=$searchQuery")
+
+            //Assert status codes
+            assertEquals(expected = HttpStatusCode.OK, actual = response.status)
+
+            //expected search body
+            val expected = repository.searchHeroes(searchQuery)
+            val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes.size
+
+            //Assert API Response
+
+            assertEquals(expected = 1, actual = actual)
+
+        }
+
+
+    @Test
+    fun `access search heroes endpoint, query hero name, assert multiple heroes result`() =
+        testApplication {
+            environment {
+                developmentMode = false
+            }
+            val searchQuery = "sa"
+            val response = client.get("/boruto/heroes/search?name=$searchQuery")
+
+            //Assert status codes
+            assertEquals(expected = HttpStatusCode.OK, actual = response.status)
+
+            //expected search body
+            val expected = repository.searchHeroes(searchQuery)
+            val actual = Json.decodeFromString<ApiResponse>(response.body()).heroes.size
+
+            //Assert API Response
+
+            assertEquals(expected = 3, actual = actual)
+
+        }
+
+    @Test
+    fun `access search heroes endpoint, query an empty text, assert empty list as a result`() =
         testApplication {
             environment {
                 developmentMode = false
@@ -244,10 +243,8 @@ class ApplicationTest {
         }
 
 
-
     @Test
-    fun `access search heroes endpoint, query non existent hero, assert empty list as a result`
-            () =
+    fun `access search heroes endpoint, query non existent hero, assert empty list as a result`() =
         testApplication {
             environment {
                 developmentMode = false
@@ -270,8 +267,7 @@ class ApplicationTest {
 
 
     @Test
-    fun `access non existent endpoint, assert not found`
-            () =
+    fun `access non existent endpoint, assert not found`() =
         testApplication {
             environment {
                 developmentMode = false
@@ -281,9 +277,6 @@ class ApplicationTest {
 
             //Assert status codes
             assertEquals(expected = HttpStatusCode.NotFound, actual = response.status)
-
-
-
 
 
             //Assert API Response

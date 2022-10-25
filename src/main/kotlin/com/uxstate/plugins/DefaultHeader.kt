@@ -18,6 +18,8 @@ fun Application.configureDefaulterHeader(){
 
         val oneYearInSeconds = Duration.ofDays(365).seconds
 
+        //sent out with every response from the server to the client
+        //to automatically cache data for one year
         header(name = CacheControl,
                 value = "public, max-age=$oneYearInSeconds, immutable")
 

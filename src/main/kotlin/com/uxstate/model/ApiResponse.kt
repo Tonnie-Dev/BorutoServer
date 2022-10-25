@@ -18,6 +18,6 @@ data class ApiResponse(
     val nextPage: Int? = null,
     val heroes: List<Hero> = emptyList(),
 
-    //specific time when the server sent a response to client
+        //specific time when the server sent a response to client
     val lastUpdated: Long? = null
 )
