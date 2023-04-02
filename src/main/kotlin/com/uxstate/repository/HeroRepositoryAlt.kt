@@ -2,7 +2,7 @@ package com.uxstate.repository
 
 import com.uxstate.model.ApiResponse
 
-interface HeroRepositoryAlternative {
+interface HeroRepositoryAlt {
 
 
     suspend fun getAllHeroes(page:Int = 1, limit:Int = 4    )
