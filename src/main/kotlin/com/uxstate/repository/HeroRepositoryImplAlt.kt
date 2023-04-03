@@ -390,31 +390,51 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
     }
 
 
-        private fun findHeroes(name:String? ):List<Hero>{
+    fun calculatePage(heroes: List<Hero>, page: Int, limit: Int): Map<String, Int?> {
 
-                val foundHeroesList = mutableListOf<Hero>()
+        val allHeroes = heroes.windowed(size = limit,
+                step = limit,
+                partialWindows = true)
 
+        //require throws an exception if the boolean value returns false
 
-                return if(!name.isNullOrEmpty()){
+       /* therefore we are not going to request our users to request a
+        page that doesn't exist*/
+        require(page<=allHeroes.size)
 
-
-                        //iterate through the map
-                        heroes.forEach { hero ->
-
-                                //iterate through heroes list
-                                if (hero.name.lowercase().contains(name.lowercase())){
-
-                                        foundHeroesList.add(hero)
-                                }
+        val prevPage = if (page==1) null else page -1
+        val nextPage = if (page==allHeroes.size) null else page +1
 
 
+        return mapOf("prevPage" to prevPage, "nextPage" to nextPage)
+    }
 
-                        }
+    private fun findHeroes(name: String?): List<Hero> {
 
-                        foundHeroesList
+        val foundHeroesList = mutableListOf<Hero>()
+
+
+        return if (!name.isNullOrEmpty()) {
+
+
+            //iterate through the map
+            heroes.forEach { hero ->
+
+                //iterate through heroes list
+                if (hero.name.lowercase()
+                            .contains(name.lowercase())
+                ) {
+
+                    foundHeroesList.add(hero)
                 }
-                //return an empty list if name is not found
-                else emptyList()
+
+
+            }
+
+            foundHeroesList
         }
+        //return an empty list if name is not found
+        else emptyList()
+    }
 
 }
