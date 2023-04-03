@@ -1,6 +1,7 @@
 package com.uxstate.plugins
 
 import com.uxstate.routes.getAllHeroes
+import com.uxstate.routes.getAllHeroesAlt
 import com.uxstate.routes.root
 import com.uxstate.routes.searchHeroes
 import io.ktor.server.routing.*
@@ -12,13 +13,14 @@ fun Application.configureRouting() {
     routing {
         this.root()
         this.getAllHeroes()
+        //this.getAllHeroesAlt()
         this.searchHeroes()
-        static("/images"){
+        static("/images") {
 
             resources("images")
         }
 
-        get("/test"){
+        get("/test") {
 
             throw IllegalAccessException()
         }

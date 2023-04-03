@@ -24,16 +24,15 @@ fun Route.getAllHeroesAlt() {
 
             //retrieve page query defaulting to 1 if null
             val page = call.request.queryParameters["page"]?.toInt() ?: 1
-            require(page in 1..5) //{explanatory message}
+            val limit = call.request.queryParameters["limit"]?.toInt() ?: 4
+            //require(page in 1..5) //not required in this case
 
             //respond
-            repository.getAllHeroes(page)
+            val response = repository.getAllHeroes(page, limit)
 
-            call.respond( message = repository.getAllHeroes(page), status = HttpStatusCode.OK)
-        }
+            call.respond(message = response, status = HttpStatusCode.OK)
 
-
-        catch (e: NumberFormatException) {
+        } catch (e: NumberFormatException) {
 
             /*exception in Java that occurs when an attempt is made to
             convert a string with an incorrect format to a numeric value*/
@@ -55,7 +54,6 @@ fun Route.getAllHeroesAlt() {
 
         }
     }
-
 
 
 }

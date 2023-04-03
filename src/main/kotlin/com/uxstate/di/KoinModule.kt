@@ -9,8 +9,8 @@ import org.koin.dsl.module
 //module{} (from koin) specifies how to inject certain types e.g. repository
 val koinModule = module {
 
-  /*  defines how to specify a kind inside here using singleton for
-    single instance - across the Boruto server*/
+    /*  defines how to specify a kind inside here using singleton for
+      single instance - across the Boruto server*/
 
     single<HeroRepository> {
 
@@ -19,11 +19,11 @@ val koinModule = module {
     }
 
     /*
-    single -implies this is a singleton
+    single - implies this is a singleton
     HeroRepositoryAlt - this is the type
     HeroRepositoryImplAlt - is the implementation
     */
-    single <HeroRepositoryAlt>{
+    single<HeroRepositoryAlt> {
 
         HeroRepositoryImplAlt()
     }
