@@ -384,7 +384,7 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
                 previousPage = calculatePage(heroes = heroes, page = page, limit = limit)
                 ["prevPage"],
                 nextPage = calculatePage(heroes = heroes, page = page, limit = limit)["nextPage"],
-                heroes = listOf(),
+                heroes = provideHeroes(heroes = heroes, page = page, pageSize = limit),
                 lastUpdated = System.currentTimeMillis())
     }
 
@@ -416,14 +416,14 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
         return mapOf("prevPage" to prevPage, "nextPage" to nextPage)
     }
 
-    private fun provideHeroes(heroes: List<Hero>, page: Int, pageSize: Int):List<Hero> {
+    private fun provideHeroes(heroes: List<Hero>, page: Int, pageSize: Int): List<Hero> {
 
         val heroesListsByPage =
             heroes.windowed(size = pageSize, step = pageSize, partialWindows = true)
 
+        require(page > 0 && page <= heroesListsByPage.size)
 
-
-        return heroesListsByPage[page -1]
+        return heroesListsByPage[page - 1]
     }
 
     private fun findHeroes(name: String?): List<Hero> {
