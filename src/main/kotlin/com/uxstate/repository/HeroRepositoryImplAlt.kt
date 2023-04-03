@@ -377,8 +377,15 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
             )
     )
 
-    override suspend fun getAllHeroes(page: Int, limit: Int) {
-        TODO("Not yet implemented")
+    override suspend fun getAllHeroes(page: Int, limit: Int): ApiResponse {
+
+        return ApiResponse(success = true,
+                message = "OK",
+                previousPage = calculatePage(heroes = heroes, page = page, limit = limit)
+                ["prevPage"],
+                nextPage = calculatePage(heroes = heroes, page = page, limit = limit)["nextPage"],
+                heroes = listOf(),
+                lastUpdated = System.currentTimeMillis())
     }
 
     override suspend fun searchHeroes(name: String?): ApiResponse {
@@ -390,7 +397,7 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
     }
 
 
-    fun calculatePage(heroes: List<Hero>, page: Int, limit: Int): Map<String, Int?> {
+    private fun calculatePage(heroes: List<Hero>, page: Int, limit: Int): Map<String, Int?> {
 
         val allHeroes = heroes.windowed(size = limit,
                 step = limit,
@@ -398,15 +405,25 @@ class HeroRepositoryImplAlt : HeroRepositoryAlt {
 
         //require throws an exception if the boolean value returns false
 
-       /* therefore we are not going to request our users to request a
-        page that doesn't exist*/
-        require(page<=allHeroes.size)
+        /* therefore we are not going to request our users to request a
+         page that doesn't exist*/
+        require(page <= allHeroes.size)
 
-        val prevPage = if (page==1) null else page -1
-        val nextPage = if (page==allHeroes.size) null else page +1
+        val prevPage = if (page == 1) null else page - 1
+        val nextPage = if (page == allHeroes.size) null else page + 1
 
 
         return mapOf("prevPage" to prevPage, "nextPage" to nextPage)
+    }
+
+    private fun provideHeroes(heroes: List<Hero>, page: Int, pageSize: Int):List<Hero> {
+
+        val heroesListsByPage =
+            heroes.windowed(size = pageSize, step = pageSize, partialWindows = true)
+
+
+
+        return heroesListsByPage[page -1]
     }
 
     private fun findHeroes(name: String?): List<Hero> {
