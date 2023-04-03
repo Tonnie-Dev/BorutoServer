@@ -12,8 +12,8 @@ fun Application.configureRouting() {
 
     routing {
         this.root()
-        this.getAllHeroes()
-        //this.getAllHeroesAlt()
+       // this.getAllHeroes()
+        this.getAllHeroesAlt()
         this.searchHeroes()
         static("/images") {
 
