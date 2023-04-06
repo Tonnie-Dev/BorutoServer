@@ -1,1 +1,1 @@
-web: build/install/come.example.borutoserver/bin/come.example.borutoserver
+web: build/install/com.uxstate.borutoserver/bin/com.uxstate.borutoserver
